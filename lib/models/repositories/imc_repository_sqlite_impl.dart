@@ -1,7 +1,7 @@
-import '../models/imc.dart';
+import '../imc.dart';
 import '../services/altura_service.dart';
 import '../services/imc_service.dart';
-import '../utils/calculadora_imc.dart';
+import '../../utils/calculadora_imc.dart';
 import 'imc_repository.dart';
 
 class IMCRepositorySqliteImpl implements IMCRepository {

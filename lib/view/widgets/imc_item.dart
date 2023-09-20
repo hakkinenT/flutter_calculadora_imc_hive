@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_calculadora_imc/utils/constants.dart';
 
-import '../models/imc.dart';
+import '../../models/imc.dart';
 
 class IMCItem extends StatelessWidget {
   const IMCItem({

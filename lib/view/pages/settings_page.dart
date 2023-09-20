@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_calculadora_imc/utils/constants.dart';
-import 'package:flutter_calculadora_imc/widgets/purple_linear_progress_indicator.dart';
+import 'package:flutter_calculadora_imc/view/widgets/purple_linear_progress_indicator.dart';
 
-import '../models/imc.dart';
-import '../repositories/imc_repository.dart';
-import '../repositories/imc_repository_sqlite_impl.dart';
-import '../utils/form_field_validation.dart';
-import '../utils/methods.dart';
+import '../../models/imc.dart';
+import '../../models/repositories/imc_repository.dart';
+import '../../models/repositories/imc_repository_sqlite_impl.dart';
+import '../../utils/form_field_validation.dart';
+import '../../utils/methods.dart';
 import '../widgets/custom_text_form_field.dart';
 import '../widgets/height_setting_item.dart';
 

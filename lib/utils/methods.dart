@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../widgets/custom_snack_bar.dart';
+import '../view/widgets/custom_snack_bar.dart';
 
 double convertStringToDouble(String text) => double.parse(text);
 

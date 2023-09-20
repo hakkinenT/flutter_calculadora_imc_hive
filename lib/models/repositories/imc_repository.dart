@@ -1,4 +1,4 @@
-import '../models/imc.dart';
+import '../imc.dart';
 
 abstract interface class IMCRepository {
   Future<void> addAltura(IMC imc);

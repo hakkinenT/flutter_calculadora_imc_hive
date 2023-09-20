@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 
-import '../db/db.dart';
+import '../../db/db.dart';
 
 class AlturaService {
   late Database db;

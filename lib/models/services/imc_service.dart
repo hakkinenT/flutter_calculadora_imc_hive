@@ -1,7 +1,7 @@
 import 'package:flutter_calculadora_imc/utils/methods.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../db/db.dart';
+import '../../db/db.dart';
 
 class IMCService {
   late Database db;

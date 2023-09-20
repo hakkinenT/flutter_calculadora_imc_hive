@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pages/imc_page.dart';
+import 'view/pages/imc_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
