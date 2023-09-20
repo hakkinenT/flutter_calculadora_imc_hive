@@ -43,6 +43,13 @@ class _SettingsPageState extends State<SettingsPage> {
           if (loading) const PurpleLinearProgressIndicator(),
           HeightSettingItem(
             children: [
+              const Text(
+                "Informe a Altura em metros",
+                style: TextStyle(color: Colors.black54),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               CustomTextFormField(
                 controller: alturaController,
                 hintText: '${altura.toStringAsFixed(2)} m',
@@ -62,7 +69,7 @@ class _SettingsPageState extends State<SettingsPage> {
       var response = await repository.getAltura();
 
       setState(() {
-        altura = response;
+        alturaController.text = response.toString();
       });
     } catch (e) {
       if (mounted) {

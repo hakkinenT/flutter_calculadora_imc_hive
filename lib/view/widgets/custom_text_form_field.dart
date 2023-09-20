@@ -9,6 +9,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onChanged,
     this.controller,
     this.suffixIcon,
+    this.initialValue,
   });
 
   final String hintText;
@@ -16,6 +17,7 @@ class CustomTextFormField extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final TextEditingController? controller;
   final Widget? suffixIcon;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,9 @@ class CustomTextFormField extends StatelessWidget {
         borderSide: const BorderSide(color: appColor));
 
     return TextFormField(
+      initialValue: initialValue,
       controller: controller,
+      autofocus: true,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
