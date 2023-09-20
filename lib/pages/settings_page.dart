@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_calculadora_imc/utils/constants.dart';
+import 'package:flutter_calculadora_imc/widgets/purple_linear_progress_indicator.dart';
 
 import '../models/imc.dart';
 import '../repositories/imc_repository.dart';
@@ -39,7 +40,7 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       body: ListView(
         children: [
-          if (loading) const LinearProgressIndicator(),
+          if (loading) const PurpleLinearProgressIndicator(),
           HeightSettingItem(
             children: [
               CustomTextFormField(
