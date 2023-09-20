@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_calculadora_imc/models/imc.dart';
 
+import '../models/imc.dart';
 import '../repositories/imc_repository.dart';
+import '../repositories/imc_repository_sqlite_impl.dart';
 import '../utils/form_field_validation.dart';
-import '../widgets/custom_elevated_button.dart';
+import '../utils/methods.dart';
+import '../widgets/custom_drawer.dart';
 import '../widgets/custom_text_form_field.dart';
-import '../widgets/form_label.dart';
 import '../widgets/imc_item.dart';
+import '../widgets/purple_linear_progress_indicator.dart';
+import '../widgets/register_weight_dialog.dart';
 
 class IMCPage extends StatefulWidget {
   const IMCPage({super.key});
@@ -17,10 +20,20 @@ class IMCPage extends StatefulWidget {
 
 class _IMCPageState extends State<IMCPage> {
   TextEditingController pesoController = TextEditingController();
-  TextEditingController alturaController = TextEditingController();
-  IMCRepository repository = IMCRepository();
+
   bool loading = false;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool isValid = true;
+  String? messageValidation;
+
+  IMCRepository repository = IMCRepositorySqliteImpl();
+  List<IMC> imcs = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    _getIMCs();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +47,13 @@ class _IMCPageState extends State<IMCPage> {
           ),
         ],
       ),
+      drawer: const CustomDrawer(),
       body: loading
-          ? const LinearProgressIndicator(
-              color: Colors.purple,
-            )
+          ? const PurpleLinearProgressIndicator()
           : ListView.builder(
               padding: const EdgeInsets.all(20),
-              itemCount: repository.imcs.length,
+              itemCount: imcs.length,
               itemBuilder: (context, index) {
-                final imcs = repository.imcs;
                 return IMCItem(
                   imc: imcs[index],
                   deleteFunction: () => _onDeleteButtonPressed(imcs[index]),
@@ -51,115 +62,126 @@ class _IMCPageState extends State<IMCPage> {
     );
   }
 
+  _getIMCs() async {
+    _showLoadingProgress();
+
+    try {
+      imcs = await repository.getIMCs();
+      _sortToDescendingOrder();
+    } catch (e) {
+      if (mounted) {
+        showErrorMessage(context, "Houve um erro ao obter os dados no banco!");
+      }
+    }
+
+    _hideLoadingProgress();
+  }
+
+  void _sortToDescendingOrder() {
+    imcs.sort((a, b) => b.id!.compareTo(a.id!));
+  }
+
+  void _showLoadingProgress() => setState(() {
+        loading = true;
+      });
+
+  void _hideLoadingProgress() => setState(() {
+        loading = false;
+      });
+
   void _onAddButtonPressed() {
-    showModalBottomSheet(
+    showAdaptiveDialog(
         context: context,
-        backgroundColor: Colors.white,
-        isScrollControlled: true,
         builder: (context) {
-          return _ModalBottomSheetBody(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const FormLabel(label: "Peso"),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  CustomTextFormField(
-                    controller: pesoController,
-                    hintText: "50.0 kg",
-                    validator: FormFieldValidation.pesoValidation,
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const FormLabel(label: "Altura"),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  CustomTextFormField(
-                    controller: alturaController,
-                    hintText: "1.50 m",
-                    validator: FormFieldValidation.alturaValidation,
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  CustomElevatedButton(
-                      onPressed: _onCalcularButtonPressed,
-                      child: const Text("Calcular IMC")),
-                ],
+          return registerWeightDialog(context,
+              content: CustomTextFormField(
+                controller: pesoController,
+                hintText: "50.0 kg",
               ),
-            ),
-          );
+              onCalcularPressed: _onCalcularButtonPressed);
         });
   }
 
   void _onCalcularButtonPressed() async {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        loading = true;
-      });
-      double peso = 0.0;
-      double altura = 1.0;
+    _validateWeight();
 
-      setState(() {
-        peso = double.parse(pesoController.text);
+    if (isValid) {
+      _showLoadingProgress();
 
-        altura = double.parse(alturaController.text);
-      });
-
-      await repository.addIMC(peso, altura);
-
-      pesoController.clear();
-      alturaController.clear();
-
-      setState(() {
-        loading = false;
-      });
+      await _addIMC();
+      await _getIMCs();
 
       if (mounted) {
-        Navigator.pop(context);
+        showSuccessMessage(context, "IMC cadastrado com sucesso!");
+      }
+
+      clearTextField(pesoController);
+
+      _hideLoadingProgress();
+    } else {
+      showErrorMessage(context, messageValidation!);
+      _resetState();
+    }
+
+    if (mounted) {
+      _goBackToHomePage(context);
+    }
+  }
+
+  void _validateWeight() {
+    setState(() {
+      messageValidation =
+          FormFieldValidation.pesoValidation(pesoController.text);
+      if (messageValidation != null) {
+        isValid = false;
+      }
+    });
+  }
+
+  Future<void> _addIMC() async {
+    double? peso;
+
+    setState(() {
+      peso = convertStringToDouble(pesoController.text);
+    });
+
+    try {
+      await repository.addIMC(IMC(peso: peso));
+    } catch (e) {
+      if (mounted) {
+        showErrorMessage(context, "Houve um erro ao tentar cadastrar o IMC!");
       }
     }
   }
 
-  void _onDeleteButtonPressed(IMC imc) async {
-    setState(() {
-      loading = true;
-    });
+  void _resetState() => setState(() {
+        isValid = true;
+      });
 
-    await repository.removeIMC(imc);
-
-    setState(() {
-      loading = false;
-    });
+  void _goBackToHomePage(BuildContext context) {
+    Navigator.pop(context);
   }
-}
 
-class _ModalBottomSheetBody extends StatelessWidget {
-  const _ModalBottomSheetBody({required this.child});
+  void _onDeleteButtonPressed(IMC imc) async {
+    _showLoadingProgress();
 
-  final Widget child;
+    await _deleteIMC(imc);
+    await _getIMCs();
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-        ),
-        padding: const EdgeInsets.all(20),
-        child: child,
-      ),
-    );
+    if (mounted) {
+      showSuccessMessage(context, "IMC removido com sucesso!");
+    }
+
+    _hideLoadingProgress();
+  }
+
+  Future<void> _deleteIMC(IMC imc) async {
+    try {
+      await repository.removeIMC(imc);
+    } catch (e) {
+      if (mounted) {
+        showErrorMessage(context, 'Houve um erro ao tentar remover o IMC!');
+      }
+    }
   }
 }

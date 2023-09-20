@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_calculadora_imc/pages/imc_page.dart';
 
-void main() {
+import 'pages/imc_page.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 

@@ -22,8 +22,8 @@ class IMCItem extends StatelessWidget {
         ),
         subtitle: _IMGItemSubtitle(
           children: [
-            Text('Peso: ${imc.peso.toStringAsFixed(2)}'),
-            Text('Altura: ${imc.altura.toStringAsFixed(2)}'),
+            Text('Peso: ${imc.peso?.toStringAsFixed(2)}'),
+            Text('Altura: ${imc.altura?.toStringAsFixed(2)}'),
           ],
         ),
         isThreeLine: true,
