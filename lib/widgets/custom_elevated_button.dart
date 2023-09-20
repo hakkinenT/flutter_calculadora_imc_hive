@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_calculadora_imc/utils/constants.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton({
@@ -16,7 +17,7 @@ class CustomElevatedButton extends StatelessWidget {
     return _CustomElevatedButtonBody(
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.purple,
+          backgroundColor: appColor,
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_calculadora_imc/utils/constants.dart';
 
 import '../models/imc.dart';
 import '../repositories/imc_repository.dart';
@@ -152,7 +153,7 @@ class _AddAltura extends StatelessWidget {
         onPressed: onPressed,
         icon: const Icon(
           Icons.send_rounded,
-          color: Colors.purple,
+          color: appColor,
         ));
   }
 }

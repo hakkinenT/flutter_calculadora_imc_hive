@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_calculadora_imc/utils/constants.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
@@ -20,7 +21,7 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     final border = OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(color: Colors.purple));
+        borderSide: const BorderSide(color: appColor));
 
     return TextFormField(
       controller: controller,

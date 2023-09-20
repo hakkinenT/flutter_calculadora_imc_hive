@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_calculadora_imc/utils/constants.dart';
 
 import '../models/imc.dart';
 
@@ -28,7 +29,11 @@ class IMCItem extends StatelessWidget {
         ),
         isThreeLine: true,
         trailing: IconButton(
-            onPressed: deleteFunction, icon: const Icon(Icons.delete)),
+            onPressed: deleteFunction,
+            icon: const Icon(
+              Icons.delete,
+              color: appColor,
+            )),
       ),
     );
   }

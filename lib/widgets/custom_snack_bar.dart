@@ -23,10 +23,7 @@ SnackBar _customSnackBar(
     content: Text(
       message,
       style: TextStyle(
-          color: textColor,
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 0.9),
+          color: textColor, fontWeight: FontWeight.w500, letterSpacing: 0.9),
     ),
     backgroundColor: backgroundColor,
   );
