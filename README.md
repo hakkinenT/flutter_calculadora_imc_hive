@@ -20,17 +20,14 @@ Enquanto a altura deve ser informada apenas uma vez nas Configurações do aplic
 </p>
 
 ## Demonstração
-![Altura](https://github.com/hakkinenT/assets/blob/master/flutter-projects/flutter-calculadora-imc-sqlite/altura-screen.gif)
-![IMC](https://github.com/hakkinenT/assets/blob/master/flutter-projects/flutter-calculadora-imc-sqlite/cadastrar-imc-screen.gif)
-
-Insira um gif ou um link de alguma demonstração
-
+<p float="left">
+    <img src="https://github.com/hakkinenT/assets/blob/master/flutter-projects/flutter-calculadora-imc-sqlite/altura-screen.gif" alt="alturagif" width="270" height="480"/>
+    <img src="https://github.com/hakkinenT/assets/blob/master/flutter-projects/flutter-calculadora-imc-sqlite/cadastrar-imc-screen.gif" alt="cadastrarImcgif" width="270" height="480"/>
+</p>
 
 ## Funcionalidades
-
 - Calcular IMC
 - Excluir IMC
-
 
 ## Tecnologias Utilizadas
 - Flutter
@@ -38,9 +35,7 @@ Insira um gif ou um link de alguma demonstração
 - [sqflite](https://pub.dev/packages/sqflite)
 
 ## Aprendizados
-
 Nesse projeto foi possível aprender sobre a persistência de dados em Flutter usando o Banco de Dados SQLite.
-
 
 ## Rodando localmente
 
