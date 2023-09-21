@@ -1,5 +1,5 @@
 
-# Calculadora IMC
+# Calculadora IMC com SQLite
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](https://github.com/hakkinenT/flutter_calculadora_imc_sqlite/blob/main/LICENSE) 
 ![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white) 
